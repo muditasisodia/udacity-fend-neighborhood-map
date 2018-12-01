@@ -125,7 +125,7 @@ menuClicked(){
     return (
       <React.Fragment>
       <div className="nav">
-        <i class="fa fa-bars" aria-hidden="true" onClick={()=>this.menuClicked()} ></i>
+        <i className="fa fa-bars" aria-hidden="true" onClick={()=>this.menuClicked()} role="button" tabIndex={0}></i>
         <img src={FSLogo} alt="Powered by FourSquare"/>
       </div>
       <main>
@@ -133,10 +133,12 @@ menuClicked(){
       <div className = "list-container">
         <input
           type="text"
+          tabIndex={0}
           value={this.state.query}
           onChange={this.handleChange}
           className="search-field"
           placeholder="Search eg. Pali Market"
+          role="search"
         />
           <List
           places={this.state.query===""?this.state.allPlaces: this.state.allPlaces.filter(place => place.venue.name.toLowerCase().includes(this.state.query.toLowerCase()))}
@@ -145,7 +147,7 @@ menuClicked(){
       </div>
     }
       <div className="map-container" style={{width: this.state.showList? '75%': '100%'}}>
-      <div id="map"></div>
+      <div id="map" role="application"></div>
       </div>
       </main>
       </React.Fragment>
