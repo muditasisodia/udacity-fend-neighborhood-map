@@ -53,13 +53,14 @@ main {
 
 .list-container {
   height: 100vh;
-  width: 25%;
+  width: 300vw;
   background-color: #010101;
   overflow: scroll;
+  position: relative;
 }
 
 .map-container {
-  width: 75%;
+  /*width: -10vw;*/
 }
 
 ul {
@@ -85,4 +86,30 @@ li:hover {
   padding: 12px 15px;
   margin-left: 40px;
   color: #eee;
+}
+
+.nav {
+  padding: 10px;
+  padding-left: 20px;
+  font-size: 30px;
+}
+
+i:hover {
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 425px) {
+  .list-container {
+    width: 100vw;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .list-container {
+    width: 65vw;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .list-container {
+    width: 30vw;
+  }
 }

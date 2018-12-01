@@ -10,19 +10,26 @@ class App extends Component {
     this.state = {
       allPlaces: [],
       query: "",
-      allMarkers: []
+      allMarkers: [],
+      showMenu: false,
+      showList: false
     };
     this.handleChange = this.handleChange.bind(this);
   }
     componentDidMount() {
       this.getPlaces();
+      window.gm_authFailure = this.gm_authFailure;
+    }
+
+    gm_authFailure = () => {
+      alert("Authorization failed :(");
     }
 
     handleChange(event) {
     this.setState({query: event.target.value});
 
     this.state.allMarkers.forEach(marker => {
-      if (marker.title.includes(event.target.value)){
+      if (marker.title.toLowerCase().includes(event.target.value.toLowerCase())){
         marker.setVisible(true);
       }
       else{
@@ -103,12 +110,24 @@ getPlaces = () => {
         },
       ()=>this.loadMap())
     })
-    .catch(error => console.log("ERROR: "+error))
+    .catch(error => {
+      console.log("ERROR: "+error)
+      alert("There was an error from FromSqaure.");
+    })
+}
+
+menuClicked(){
+  this.setState(prevState => ({showList: !prevState.showList}))
 }
 
   render() {
     return (
+      <React.Fragment>
+      <div className="nav">
+        <i class="fa fa-bars" aria-hidden="true" onClick={()=>this.menuClicked()} ></i>
+      </div>
       <main>
+      {this.state.showList &&
       <div className = "list-container">
         <input
           type="text"
@@ -118,14 +137,16 @@ getPlaces = () => {
           placeholder="Search eg. Pali Market"
         />
           <List
-          places={this.state.query===""?this.state.allPlaces: this.state.allPlaces.filter(place => place.venue.name.includes(this.state.query))}
+          places={this.state.query===""?this.state.allPlaces: this.state.allPlaces.filter(place => place.venue.name.toLowerCase().includes(this.state.query.toLowerCase()))}
           markers = {this.state.allMarkers}
         />
       </div>
-      <div className="map-container">
+    }
+      <div className="map-container" style={{width: this.state.showList? '75%': '100%'}}>
       <div id="map"></div>
       </div>
       </main>
+      </React.Fragment>
     );
   }
 }
