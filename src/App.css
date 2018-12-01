@@ -30,3 +30,59 @@
     transform: rotate(360deg);
   }
 }
+/*----------------------------------------------------------------------------*/
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+
+#map {
+  height: 100vh;
+}
+
+
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  display: flex;
+  flex-direction: row;
+}
+
+.list-container {
+  height: 100vh;
+  width: 25%;
+  background-color: #010101;
+  overflow: scroll;
+}
+
+.map-container {
+  width: 75%;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  color: #aeaeae;
+  padding: 5px;
+
+}
+
+li:hover {
+  background-color: #555;
+  cursor: pointer;
+}
+
+.search-field {
+  margin-top: 15px;
+  background-color: #010101;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 12px 15px;
+  margin-left: 40px;
+  color: #eee;
+}
