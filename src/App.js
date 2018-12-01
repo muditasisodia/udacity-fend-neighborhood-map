@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import List from './components/List';
+import FSLogo from './assets/powered-by-foursquare-blue.svg';
 import './App.css';
 
 class App extends Component {
@@ -125,6 +126,7 @@ menuClicked(){
       <React.Fragment>
       <div className="nav">
         <i class="fa fa-bars" aria-hidden="true" onClick={()=>this.menuClicked()} ></i>
+        <img src={FSLogo} alt="Powered by FourSquare"/>
       </div>
       <main>
       {this.state.showList &&

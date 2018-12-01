@@ -92,20 +92,33 @@ li:hover {
   padding: 10px;
   padding-left: 20px;
   font-size: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 i:hover {
   cursor: pointer;
 }
 
+img {
+  width: 50%;
+}
+
 @media only screen and (min-width: 425px) {
   .list-container {
     width: 100vw;
+  }
+  img {
+    width: 35%;
   }
 }
 @media only screen and (min-width: 768px) {
   .list-container {
     width: 65vw;
+  }
+  img {
+    width: 25%;
   }
 }
 @media only screen and (min-width: 1024px) {
