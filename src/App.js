@@ -43,6 +43,7 @@ class App extends Component {
     var marker = new window.google.maps.Marker({
       position: {lat: place.venue.location.lat, lng: place.venue.location.lng},
       map: map,
+      animation: window.google.maps.Animation.DROP,
       title: place.venue.name
     });
 
@@ -54,9 +55,27 @@ class App extends Component {
       infowindow.open(map, marker);
     });
 
+    marker.addListener('click', toggleBounce);
+
+      function toggleBounce() {
+        if (marker.getAnimation() !== null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(window.google.maps.Animation.BOUNCE);
+        }
+
+        setTimeout(function(){
+          if(marker.getAnimation() !== null) {
+              marker.setAnimation(null);
+          }
+        }, 500)
+      }
   })
 
+
 }
+
+
 
 getPlaces = () => {
   const endPoint = "https://api.foursquare.com/v2/venues/explore?";
