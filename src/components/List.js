@@ -4,6 +4,7 @@ import './../App.css';
 class List extends Component {
 
   clickListName = venueName => {
+    //Triggering click event on the marker that matches the clicked location
     this.props.markers.forEach(marker => {
       if (marker.title === venueName) {
         window.google.maps.event.trigger(marker, "click");

@@ -19,6 +19,8 @@ class App extends Component {
   }
     componentDidMount() {
       this.getPlaces();
+
+      //In case of incorrect API key
       window.gm_authFailure = this.gm_authFailure;
     }
 
@@ -29,6 +31,7 @@ class App extends Component {
     handleChange(event) {
     this.setState({query: event.target.value});
 
+//converting both strings to be compared to lower case and then comparing
     this.state.allMarkers.forEach(marker => {
       if (marker.title.toLowerCase().includes(event.target.value.toLowerCase())){
         marker.setVisible(true);
@@ -86,6 +89,7 @@ createMarkers(places, map, infowindow){
           marker.setAnimation(window.google.maps.Animation.BOUNCE);
         }
 
+        //ensures bounce animation stops after 500 milliseconds
         setTimeout(function(){
           if(marker.getAnimation() !== null) {
               marker.setAnimation(null);
@@ -105,6 +109,7 @@ getPlaces = () => {
         v: "20180323"
       }
 
+//AJAX call FourSquare to get locations to plot
   axios.get(endPoint + new URLSearchParams(params))
     .then(response => {
       this.setState({allPlaces: response.data.response.groups[0].items
@@ -113,7 +118,7 @@ getPlaces = () => {
     })
     .catch(error => {
       console.log("ERROR: "+error)
-      alert("There was an error from FromSqaure.");
+      alert("There was an error from FourSqaure.");
     })
 }
 
