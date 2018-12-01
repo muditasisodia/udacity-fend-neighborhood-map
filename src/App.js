@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import logo from './logo.svg';
 import List from './components/List';
 import './App.css';
 
@@ -9,7 +8,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      places: [],
+      allPlaces: [],
       query: "",
       allMarkers: []
     };
@@ -21,6 +20,15 @@ class App extends Component {
 
     handleChange(event) {
     this.setState({query: event.target.value});
+
+    this.state.allMarkers.forEach(marker => {
+      if (marker.title.includes(event.target.value)){
+        marker.setVisible(true);
+      }
+      else{
+        marker.setVisible(false);
+      }
+    })
   }
 
   loadMap = () => {
@@ -29,14 +37,20 @@ class App extends Component {
   }
 
   initMap = () => {
-  var map = new window.google.maps.Map(document.getElementById('map'), {
+    var map = new window.google.maps.Map(document.getElementById('map'), {
     center: {lat: 19.0760, lng: 72.8777},
     zoom: 11
   });
 
   var infowindow = new window.google.maps.InfoWindow();
 
-  this.state.places.forEach(place => {
+  this.createMarkers(this.state.allPlaces, map, infowindow);
+
+}
+
+createMarkers(places, map, infowindow){
+
+  this.state.allPlaces.forEach(place => {
 
     var contentString = "<h4>"+place.venue.name+"</h4><h5>"+place.venue.location.address+"</h5>";
 
@@ -71,11 +85,7 @@ class App extends Component {
         }, 500)
       }
   })
-
-
 }
-
-
 
 getPlaces = () => {
   const endPoint = "https://api.foursquare.com/v2/venues/explore?";
@@ -89,7 +99,9 @@ getPlaces = () => {
 
   axios.get(endPoint + new URLSearchParams(params))
     .then(response => {
-      this.setState({places: response.data.response.groups[0].items}, ()=>this.loadMap())
+      this.setState({allPlaces: response.data.response.groups[0].items
+        },
+      ()=>this.loadMap())
     })
     .catch(error => console.log("ERROR: "+error))
 }
@@ -105,8 +117,8 @@ getPlaces = () => {
           className="search-field"
           placeholder="Search eg. Pali Market"
         />
-        <List
-          places={this.state.query===""?this.state.places: this.state.places.filter(place => place.venue.name.includes(this.state.query))}
+          <List
+          places={this.state.query===""?this.state.allPlaces: this.state.allPlaces.filter(place => place.venue.name.includes(this.state.query))}
           markers = {this.state.allMarkers}
         />
       </div>
