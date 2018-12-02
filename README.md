@@ -13,3 +13,9 @@ The app displays venues for outdoor activities in Mumbai using the [Google Maps 
 
 The user may filter through the locations using the input box.
 Location information can be obtained by either clicking on the item in the list of clicking a marker on the map.
+
+Caching only works in the production mode. In order to test this, you must first build the project. In the terminal, run
+`npm run build`
+`npm install -g serve` or `yarn global add serve`
+`serve -s build`
+The application can now be accessed on http://localhost:5000.
