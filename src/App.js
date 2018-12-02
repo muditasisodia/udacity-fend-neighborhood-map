@@ -146,6 +146,7 @@ menuClicked(){
           <List
           places={this.state.query===""?this.state.allPlaces: this.state.allPlaces.filter(place => place.venue.name.toLowerCase().includes(this.state.query.toLowerCase()))}
           markers = {this.state.allMarkers}
+          role="menu"
         />
       </aside>
     }

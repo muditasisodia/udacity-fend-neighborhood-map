@@ -14,11 +14,16 @@ class List extends Component {
 
   render(){
     return(
-      <ul>
+      <ul role="group">
       {this.props.places.length>0 &&
         this.props.places.map(place => {
           return(
-            <li key={place.venue.id} onClick={()=>this.clickListName(place.venue.name)}>
+            <li
+              key={place.venue.id}
+              onClick={()=>this.clickListName(place.venue.name)}
+              role="menuitem"
+              tabIndex={0}
+            >
           {place.venue.name}
         </li>);
       })
