@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import List from './components/List';
 import FSLogo from './assets/powered-by-foursquare-blue.svg';
 import './App.css';
@@ -63,7 +62,7 @@ createMarkers(places, map, infowindow){
 
   this.state.allPlaces.forEach(place => {
 
-    var contentString = "<h4>"+place.venue.name+"</h4><h5>"+place.venue.location.address+"</h5>";
+    var contentString = `<h4>${place.venue.name}</h4><h5>${place.venue.location.address}</h5>`;
 
     var marker = new window.google.maps.Marker({
       position: {lat: place.venue.location.lat, lng: place.venue.location.lng},
@@ -101,18 +100,17 @@ createMarkers(places, map, infowindow){
 
 getPlaces = () => {
   const endPoint = "https://api.foursquare.com/v2/venues/explore?";
-  const params = {
-        client_id: "3P10L1CV3E413ZQ4ZM553ZLVLPPFNGPIMUVOIRYI4NUC54I0",
-        client_secret: "ULYHIA3RI3SZ4KPDD5DKKOQ3R411IBZILOVWJPHSIGR1LBXY",
-        query: "outdoors",
-        near: "Mumbai",
-        v: "20180323"
-      }
+  const client_id= "3P10L1CV3E413ZQ4ZM553ZLVLPPFNGPIMUVOIRYI4NUC54I0";
+  const client_secret= "ULYHIA3RI3SZ4KPDD5DKKOQ3R411IBZILOVWJPHSIGR1LBXY";
+  const query = "outdoors";
+  const near = "Mumbai";
+  const v = "20180323";
 
 //AJAX call FourSquare to get locations to plot
-  axios.get(endPoint + new URLSearchParams(params))
-    .then(response => {
-      this.setState({allPlaces: response.data.response.groups[0].items
+  fetch(`${endPoint}client_id=${client_id}&client_secret=${client_secret}&quey=${query}&near=${near}&v=${v}`)
+    .then(response => response.json())
+    .then(data => {
+      this.setState({allPlaces: data.response.groups[0].items
         },
       ()=>this.loadMap())
     })
