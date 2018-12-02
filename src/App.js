@@ -133,7 +133,7 @@ menuClicked(){
       </div>
       <main>
       {this.state.showList &&
-      <div className = "list-container">
+      <aside className = "list-container">
         <input
           type="text"
           tabIndex={0}
@@ -147,7 +147,7 @@ menuClicked(){
           places={this.state.query===""?this.state.allPlaces: this.state.allPlaces.filter(place => place.venue.name.toLowerCase().includes(this.state.query.toLowerCase()))}
           markers = {this.state.allMarkers}
         />
-      </div>
+      </aside>
     }
       <div className="map-container" style={{width: this.state.showList? '75%': '100%'}}>
       <div id="map" role="application"></div>
@@ -164,6 +164,9 @@ function loadScript(url){
   script.src = url
   script.async = true;
   script.defer = true;
+  script.onerror = function() {
+  alert("Google Maps failed to load :(");
+};
   index.parentNode.insertBefore(script, index);
 }
 
